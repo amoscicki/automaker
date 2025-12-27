@@ -11,6 +11,7 @@ import { useSetupStore } from '@/store/setup-store';
 import { getElectronAPI } from '@/lib/electron';
 import { Toaster } from 'sonner';
 import { ThemeOption, themeOptions } from '@/config/theme-options';
+import { useAutoUpdate } from '@/hooks/use-auto-update';
 
 function RootLayoutContent() {
   const location = useLocation();
@@ -23,6 +24,9 @@ function RootLayoutContent() {
     () => useSetupStore.persist?.hasHydrated?.() ?? false
   );
   const { openFileBrowser } = useFileBrowser();
+
+  // Auto-update polling - checks for updates at configured interval
+  useAutoUpdate();
 
   // Hidden streamer panel - opens with "\" key
   const handleStreamerPanelShortcut = useCallback((event: KeyboardEvent) => {

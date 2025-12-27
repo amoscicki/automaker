@@ -7,7 +7,9 @@ import type {
   AgentModel,
   PlanningMode,
   AIProfile,
+  AutoUpdateSettings,
 } from '@automaker/types';
+import { DEFAULT_AUTO_UPDATE_SETTINGS } from '@automaker/types';
 
 // Re-export ThemeMode for convenience
 export type { ThemeMode };
@@ -483,6 +485,9 @@ export interface AppState {
   autoLoadClaudeMd: boolean; // Auto-load CLAUDE.md files using SDK's settingSources option
   enableSandboxMode: boolean; // Enable sandbox mode for bash commands (may cause issues on some systems)
 
+  // Auto-Update Settings
+  autoUpdate: AutoUpdateSettings; // Configuration for automatic update checking
+
   // Project Analysis
   projectAnalysis: ProjectAnalysis | null;
   isAnalyzing: boolean;
@@ -760,6 +765,9 @@ export interface AppActions {
   setAutoLoadClaudeMd: (enabled: boolean) => Promise<void>;
   setEnableSandboxMode: (enabled: boolean) => Promise<void>;
 
+  // Auto-Update Settings actions
+  setAutoUpdate: (settings: Partial<AutoUpdateSettings>) => void;
+
   // AI Profile actions
   addAIProfile: (profile: Omit<AIProfile, 'id'>) => void;
   updateAIProfile: (id: string, updates: Partial<AIProfile>) => void;
@@ -934,6 +942,7 @@ const initialState: AppState = {
   validationModel: 'opus', // Default to opus for GitHub issue validation
   autoLoadClaudeMd: false, // Default to disabled (user must opt-in)
   enableSandboxMode: true, // Default to enabled for security (can be disabled if issues occur)
+  autoUpdate: DEFAULT_AUTO_UPDATE_SETTINGS, // Default auto-update settings
   aiProfiles: DEFAULT_AI_PROFILES,
   projectAnalysis: null,
   isAnalyzing: false,
@@ -1572,6 +1581,13 @@ export const useAppStore = create<AppState & AppActions>()(
         // Sync to server settings file
         const { syncSettingsToServer } = await import('@/hooks/use-settings-migration');
         await syncSettingsToServer();
+      },
+
+      // Auto-Update Settings actions
+      setAutoUpdate: (settings) => {
+        set((state) => ({
+          autoUpdate: { ...state.autoUpdate, ...settings },
+        }));
       },
 
       // AI Profile actions
@@ -2729,6 +2745,7 @@ export const useAppStore = create<AppState & AppActions>()(
           validationModel: state.validationModel,
           autoLoadClaudeMd: state.autoLoadClaudeMd,
           enableSandboxMode: state.enableSandboxMode,
+          autoUpdate: state.autoUpdate,
           // Profiles and sessions
           aiProfiles: state.aiProfiles,
           chatSessions: state.chatSessions,

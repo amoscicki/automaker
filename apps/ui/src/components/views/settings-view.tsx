@@ -17,6 +17,7 @@ import { TerminalSection } from './settings-view/terminal/terminal-section';
 import { AudioSection } from './settings-view/audio/audio-section';
 import { KeyboardShortcutsSection } from './settings-view/keyboard-shortcuts/keyboard-shortcuts-section';
 import { FeatureDefaultsSection } from './settings-view/feature-defaults/feature-defaults-section';
+import { UpdatesSection } from './settings-view/updates/updates-section';
 import { DangerZoneSection } from './settings-view/danger-zone/danger-zone-section';
 import type { Project as SettingsProject, Theme } from './settings-view/shared/types';
 import type { Project as ElectronProject } from '@/lib/electron';
@@ -52,6 +53,8 @@ export function SettingsView() {
     setAutoLoadClaudeMd,
     enableSandboxMode,
     setEnableSandboxMode,
+    autoUpdate,
+    setAutoUpdate,
   } = useAppStore();
 
   // Hide usage tracking when using API key (only show for Claude Code CLI users)
@@ -158,6 +161,8 @@ export function SettingsView() {
             onValidationModelChange={setValidationModel}
           />
         );
+      case 'updates':
+        return <UpdatesSection autoUpdate={autoUpdate} onAutoUpdateChange={setAutoUpdate} />;
       case 'danger':
         return (
           <DangerZoneSection
