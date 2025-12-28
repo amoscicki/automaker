@@ -766,7 +766,7 @@ export interface AppActions {
   setEnableSandboxMode: (enabled: boolean) => Promise<void>;
 
   // Auto-Update Settings actions
-  setAutoUpdate: (settings: Partial<AutoUpdateSettings>) => void;
+  setAutoUpdate: (settings: Partial<AutoUpdateSettings>) => Promise<void>;
 
   // AI Profile actions
   addAIProfile: (profile: Omit<AIProfile, 'id'>) => void;
