@@ -6,6 +6,7 @@ import { createLogger } from '@automaker/utils';
 import { exec } from 'child_process';
 import { promisify } from 'util';
 import path from 'path';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { getErrorMessage as getErrorMessageShared, createLogError } from '../common.js';
 
@@ -65,17 +66,33 @@ export const execEnv = {
 
 /**
  * Get the root directory of the Automaker installation.
- * This is the directory containing the package.json (monorepo root).
+ * Traverses up from the current file looking for a package.json with name "automaker".
+ * This approach is more robust than using fixed relative paths.
  */
 export function getAutomakerRoot(): string {
-  // In ESM, we use import.meta.url to get the current file path
-  // This file is at: apps/server/src/routes/updates/common.ts
-  // So we need to go up 5 levels to get to the monorepo root
   const __filename = fileURLToPath(import.meta.url);
-  const __dirname = path.dirname(__filename);
+  let currentDir = path.dirname(__filename);
+  const root = path.parse(currentDir).root;
 
-  // Go up from: updates -> routes -> src -> server -> apps -> root
-  return path.resolve(__dirname, '..', '..', '..', '..', '..');
+  while (currentDir !== root) {
+    const packageJsonPath = path.join(currentDir, 'package.json');
+    if (fs.existsSync(packageJsonPath)) {
+      try {
+        const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
+        // Look for the monorepo root package.json with name "automaker"
+        if (packageJson.name === 'automaker') {
+          return currentDir;
+        }
+      } catch {
+        // Ignore JSON parse errors, continue searching
+      }
+    }
+    currentDir = path.dirname(currentDir);
+  }
+
+  // Fallback to fixed path if marker not found (shouldn't happen in normal usage)
+  const fallbackDir = path.dirname(__filename);
+  return path.resolve(fallbackDir, '..', '..', '..', '..', '..');
 }
 
 /**
