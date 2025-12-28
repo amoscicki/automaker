@@ -5,6 +5,7 @@ Thank you for your interest in contributing to Automaker! This document provides
 ## Table of Contents
 
 - [Community](#community)
+- [License](#license)
 - [Getting Started](#getting-started)
 - [Development Setup](#development-setup)
 - [Project Structure](#project-structure)
@@ -20,6 +21,28 @@ Thank you for your interest in contributing to Automaker! This document provides
 **Join our Discord community:** [discord.gg/JUDWZDN3VT](https://discord.gg/JUDWZDN3VT)
 
 > **Important:** Before working on new features, please discuss your ideas on Discord first. This helps ensure your contribution aligns with the project direction and prevents duplicate work.
+
+## License
+
+Automaker uses a **custom license** that differs from typical open-source licenses. Please read the full [LICENSE](LICENSE) file before contributing.
+
+### Key Points for Contributors
+
+1. **Contributions transfer rights**: By submitting code, documentation, or other materials, you irrevocably assign all rights to the Core Contributors. This is a "no take-backs" policy.
+
+2. **You CAN**:
+   - Use Automaker freely for internal/personal use
+   - Use Automaker to build commercial products (products that don't contain Automaker itself)
+   - Modify the code for internal use
+
+3. **You CANNOT**:
+   - Monetize, resell, or redistribute Automaker or derivatives
+   - Host Automaker as a service for others
+   - Extract and resell prompts or content from the Software
+
+4. **AI Disclaimer**: The software uses AI which can be unpredictable. Use at your own risk.
+
+By contributing, you acknowledge that you've read and agree to the license terms.
 
 ## Getting Started
 
