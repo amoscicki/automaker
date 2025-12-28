@@ -57,7 +57,3 @@
 >
 > - Apply the suggested fix, OR
 > - Reply with a clear rationale explaining why it doesn't apply
-
----
-
-**After creating this PR:** Post the link in `#core-pr` on [Discord](https://discord.gg/JUDWZDN3VT)
