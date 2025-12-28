@@ -245,7 +245,7 @@ export function UpdatesSection({ autoUpdate, onAutoUpdateChange }: UpdatesSectio
               size="icon"
               onClick={() => {
                 const url = autoUpdate.upstreamUrl.replace(/\.git$/, '');
-                window.open(url, '_blank');
+                window.open(url, '_blank', 'noopener,noreferrer');
               }}
               title="Open repository"
             >
