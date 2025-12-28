@@ -176,9 +176,11 @@ refactor(utils): extract shared helper function
 
 6. **Wait for review** - All PRs require approval from a maintainer
 
-7. **Address review feedback** promptly
+7. **Address AI reviewer comments** - All comments from automated reviewers (CodeRabbit, Gemini, etc.) must be resolved before merge. For each comment, either apply the fix or reply with a clear rationale why it doesn't apply.
 
-8. **Ensure CI passes** before requesting final review
+8. **Address review feedback** promptly
+
+9. **Ensure CI passes** before requesting final review
 
 ### PR Requirements
 
