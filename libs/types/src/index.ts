@@ -107,3 +107,11 @@ export type {
   BacklogPlanRequest,
   BacklogPlanApplyResult,
 } from './backlog-plan.js';
+
+// Updates types
+export type {
+  UpdateInfo,
+  UpdateCheckResult,
+  UpdatePullResult,
+  UpdateApiResponse,
+} from './updates.js';
