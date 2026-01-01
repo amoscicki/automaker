@@ -6,6 +6,7 @@
 
 import type { Request, Response } from 'express';
 import type { SettingsService } from '../../../services/settings-service.js';
+import type { EventEmitter } from '../../../lib/events.js';
 import type { UpdatePullResult } from '@automaker/types';
 import {
   execAsync,
@@ -22,7 +23,10 @@ import {
   logError,
 } from '../common.js';
 
-export function createPullHandler(settingsService: SettingsService) {
+export function createPullHandler(
+  settingsService: SettingsService,
+  _events: EventEmitter // Available for future progress streaming via WebSocket
+) {
   return async (_req: Request, res: Response): Promise<void> => {
     try {
       const installPath = getAutomakerRoot();

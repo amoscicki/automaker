@@ -282,8 +282,12 @@ export const createUpdatesStore = (
           lastPulled: new Date(),
         });
 
-        // Refresh info to get new commit
-        get().fetchInfo();
+        // Refresh info to get new commit (await to ensure state is updated before emitting)
+        await get()
+          .fetchInfo()
+          .catch(() => {
+            // Ignore fetchInfo errors - pull was successful, info refresh is best-effort
+          });
 
         // Emit event for other components
         _eventEmitter.emitUpdatePulled({
